@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PostController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,61 +16,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/dasboard', function () {
+Route::get('/dashboard', function () {
     return view('admin.dasboard');
 });
-// CREATE routes - Static pages
-Route::get('/kategori/create', function () {
-    return view('admin.kategori.create');
-});
 
-Route::get('/user/create', function () {
-    return view('admin.user.create');
-});
 
-Route::get('/post/create', function () {
-    return view('admin.post.create');
-});
+// Routes for Users
+Route::resource('users', UserController::class);
 
-// READ routes - Static pages (Index)
-Route::get('/kategori', function () {
-    return view('admin.kategori.index');
-});
+// Routes for Categories
+Route::resource('categories', CategoryController::class);
 
-Route::get('/user', function () {
-    return view('admin.user.index');
-});
-
-Route::get('/post', function () {
-    return view('admin.post.index');
-});
-
-// EDIT routes - Static pages
-Route::get('/kategori/edit/{id}', function ($id) {
-    return view('admin.kategori.edit', ['id' => $id]);
-});
-
-Route::get('/user/edit/{id}', function ($id) {
-    return view('admin.user.edit', ['id' => $id]);
-});
-
-Route::get('/post/edit/{id}', function ($id) {
-    return view('admin.post.edit', ['id' => $id]);
-});
-
-// SHOW routes - Static pages
-Route::get('/kategori/{id}', function ($id) {
-    return view('admin.kategori.show', ['id' => $id]);
-});
-
-Route::get('/user/{id}', function ($id) {
-    return view('admin.user.show', ['id' => $id]);
-});
-
-Route::get('/post/{id}', function ($id) {
-    return view('admin.post.show', ['id' => $id]);
-});
-
+// Routes for Posts
+Route::resource('posts', PostController::class);
 
 
 //front user 

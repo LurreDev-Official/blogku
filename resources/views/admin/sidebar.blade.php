@@ -29,7 +29,7 @@
 
     <!-- Nav Item - Kelola User -->
     <li class="nav-item">
-        <a class="nav-link" href="{{ url('/user') }}">
+        <a class="nav-link" href="{{ url('/users') }}">
             <i class="fas fa-fw fa-users"></i>
             <span>Kelola User</span>
         </a>
@@ -37,7 +37,7 @@
 
     <!-- Nav Item - Kelola Kategori -->
     <li class="nav-item">
-        <a class="nav-link" href="{{ url('/kategori') }}">
+        <a class="nav-link" href="{{ url('/categories') }}">
             <i class="fas fa-fw fa-tags"></i>
             <span>Kelola Kategori</span>
         </a>
