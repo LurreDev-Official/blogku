@@ -37,7 +37,7 @@
 
     <!-- Nav Item - Kelola Kategori -->
     <li class="nav-item">
-        <a class="nav-link" href="{{ url('/categories') }}">
+        <a class="nav-link" href="{{ url('/kategori') }}">
             <i class="fas fa-fw fa-tags"></i>
             <span>Kelola Kategori</span>
         </a>
@@ -45,7 +45,7 @@
 
     <!-- Nav Item - Kelola Post -->
     <li class="nav-item">
-        <a class="nav-link" href="{{ url('/post') }}">
+        <a class="nav-link" href="{{ url('/posts') }}">
             <i class="fas fa-fw fa-edit"></i>
             <span>Kelola Post</span>
         </a>

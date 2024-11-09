@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\User;
@@ -13,14 +12,14 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all();
-        return view('posts.index', compact('posts'));
+        return view('admin.posts.index', compact('posts'));
     }
 
     public function create()
     {
         $categories = Category::all();
         $users = User::all();
-        return view('posts.create', compact('categories', 'users'));
+        return view('admin.posts.create', compact('categories', 'users'));
     }
 
     public function store(Request $request)
@@ -41,7 +40,7 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::findOrFail($id);
-        return view('posts.show', compact('post'));
+        return view('admin.posts.show', compact('post'));
     }
 
     public function edit($id)
@@ -49,7 +48,7 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         $categories = Category::all();
         $users = User::all();
-        return view('posts.edit', compact('post', 'categories', 'users'));
+        return view('admin.posts.edit', compact('post', 'categories', 'users'));
     }
 
     public function update(Request $request, $id)

@@ -1,77 +1,77 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Post;
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class PostController extends Controller
+class CategoryController extends Controller
 {
+    // Display a listing of the categories
     public function index()
     {
-        $posts = Post::all();
-        return view('posts.index', compact('posts'));
+        $categories = Category::all();
+        return view('admin.kategori.index', compact('categories'));
     }
 
+    // Show the form for creating a new category
     public function create()
     {
-        $categories = Category::all();
-        $users = User::all();
-        return view('posts.create', compact('categories', 'users'));
+        return view('admin.kategori.create');
     }
 
+    // Store a newly created category in the database
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required',
-            'content' => 'required',
-            'category_id' => 'required',
-            'user_id' => 'required',
+            'name' => 'required|string|max:255',
         ]);
 
-        Post::create($request->all());
+        Category::create([
+            'name' => $request->name,
+        ]);
 
-        return redirect()->route('posts.index')
-                         ->with('success', 'Post created successfully.');
+        return redirect()->route('kategori.index')
+                         ->with('success', 'Category created successfully.');
     }
 
+    // Display the specified category
     public function show($id)
     {
-        $post = Post::findOrFail($id);
-        return view('posts.show', compact('post'));
+        $category = Category::findOrFail($id);
+        return view('admin.kategori.show', compact('category'));
     }
 
+    // Show the form for editing the specified category
     public function edit($id)
     {
-        $post = Post::findOrFail($id);
-        $categories = Category::all();
-        $users = User::all();
-        return view('posts.edit', compact('post', 'categories', 'users'));
+        $category = Category::findOrFail($id);
+        return view('admin.kategori.edit', compact('category'));
     }
 
+    // Update the specified category in the database
     public function update(Request $request, $id)
     {
         $request->validate([
-            'title' => 'required',
-            'content' => 'required',
-            'category_id' => 'required',
-            'user_id' => 'required',
+            'name' => 'required|string|max:255',
         ]);
 
-        $post = Post::findOrFail($id);
-        $post->update($request->all());
+        $category = Category::findOrFail($id);
+        $category->update([
+            'name' => $request->name,
+        ]);
 
-        return redirect()->route('posts.index')
-                         ->with('success', 'Post updated successfully.');
+        return redirect()->route('kategori.index')
+                         ->with('success', 'Category updated successfully.');
     }
 
+    // Remove the specified category from the database
     public function destroy($id)
     {
-        $post = Post::findOrFail($id);
-        $post->delete();
+        $category = Category::findOrFail($id);
+        $category->delete();
 
-        return redirect()->route('posts.index')
-                         ->with('success', 'Post deleted successfully.');
+        return redirect()->route('kategori.index')
+                         ->with('success', 'Category deleted successfully.');
     }
 }

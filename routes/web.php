@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\HomeController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,21 +17,12 @@ use App\Http\Controllers\PostController;
 |
 */
 
-
-Route::get('/dashboard', function () {
-    return view('admin.dasboard');
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('admin.dashboard');
+    Route::resource('users', UserController::class);
+    Route::resource('kategori', CategoryController::class);
+    Route::resource('posts', PostController::class);
 });
-
-
-// Routes for Users
-Route::resource('users', UserController::class);
-
-// Routes for Categories
-Route::resource('categories', CategoryController::class);
-
-// Routes for Posts
-Route::resource('posts', PostController::class);
-
 
 //front user 
 Route::get('/', function () {
@@ -38,3 +31,6 @@ Route::get('/', function () {
 Route::get('/detailpost', function () {
     return view('detailpost');
 });
+
+Auth::routes();
+
