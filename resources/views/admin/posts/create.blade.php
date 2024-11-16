@@ -7,7 +7,7 @@
 <h1 class="h3 mb-4 text-gray-800">Create Post</h1>
 
 <!-- Form to Create Post -->
-<form action="{{ route('posts.store') }}" method="POST">
+<form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="form-group">
         <label for="title">Post Title</label>
@@ -66,6 +66,13 @@
             </span>
         @enderror
     </div>
+
+    <div class="form-group">
+        <label for="image">Upload Image</label>
+        <input type="file" name="image" class="form-control-file" id="image">
+        </div>
+
+        
 
     <button type="submit" class="btn btn-primary">Create Post</button>
     <a href="{{ route('posts.index') }}" class="btn btn-secondary">Cancel</a>

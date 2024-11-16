@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\FrontendController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,13 +25,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('posts', PostController::class);
 });
 
-//front user 
-Route::get('/', function () {
-    return view('beranda');
-});
-Route::get('/detailpost', function () {
-    return view('detailpost');
-});
+Route::get('/', [FrontendController::class, 'index'])->name('index');
+Route::get('/detailpost/{id}', [FrontendController::class, 'show'])->name('detailpost');
 
 Auth::routes();
 

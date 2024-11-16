@@ -7,7 +7,7 @@
 <h1 class="h3 mb-4 text-gray-800">Edit Post</h1>
 
 <!-- Form to Edit Post -->
-<form action="{{ route('posts.update', $post->id) }}" method="POST">
+<form action="{{ route('posts.update', $post->id) }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
     
@@ -68,6 +68,12 @@
             </span>
         @enderror
     </div>
+
+
+    <div class="form-group">
+        <label for="image">Upload Image</label>
+        <input type="file" name="image" class="form-control-file" id="image">
+        </div>
 
     <button type="submit" class="btn btn-primary">Update Post</button>
     <a href="{{ route('posts.index') }}" class="btn btn-secondary">Cancel</a>

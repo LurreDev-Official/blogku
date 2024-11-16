@@ -23,19 +23,38 @@ class PostController extends Controller
     }
 
     public function store(Request $request)
-    {
+{
+    try {
         $request->validate([
             'title' => 'required',
             'content' => 'required',
             'category_id' => 'required',
             'user_id' => 'required',
+            'image' => 'mimes:jpg,jpeg,png|max:2048', // Tambahkan validasi ukuran
         ]);
 
-        Post::create($request->all());
+        // Hanya mengambil input yang diperlukan
+        $data = $request->only('title', 'content', 'category_id', 'user_id');
+
+        // Proses penyimpanan gambar jika ada
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images', 'public');
+            $data['image'] = $imagePath;
+        }
+
+        // Simpan data
+        Post::create($data);
 
         return redirect()->route('posts.index')
                          ->with('success', 'Post created successfully.');
+
+    } catch (\Exception $e) {
+        // Jika terjadi error, tampilkan pesan error
+        return redirect()->back()
+                         ->withInput() // Mengembalikan input sebelumnya
+                         ->with('error', 'An error occurred: ' . $e->getMessage());
     }
+}
 
     public function show($id)
     {
@@ -52,20 +71,36 @@ class PostController extends Controller
     }
 
     public function update(Request $request, $id)
-    {
-        $request->validate([
-            'title' => 'required',
-            'content' => 'required',
-            'category_id' => 'required',
-            'user_id' => 'required',
-        ]);
+{
+    $request->validate([
+        'title' => 'required',
+        'content' => 'required',
+        'category_id' => 'required',
+        'user_id' => 'required',
+    ]);
 
-        $post = Post::findOrFail($id);
-        $post->update($request->all());
+    $data = $request->only('title', 'content', 'category_id', 'user_id');
+    $post = Post::findOrFail($id);
 
-        return redirect()->route('posts.index')
-                         ->with('success', 'Post updated successfully.');
+    // Cek apakah ada file gambar baru
+    if ($request->hasFile('image')) {
+        // Hapus gambar lama jika ada
+        if ($post->image) {
+            Storage::disk('public')->delete($post->image);
+        }
+
+        // Simpan gambar baru
+        $imagePath = $request->file('image')->store('images', 'public');
+        $data['image'] = $imagePath;
     }
+
+    // Perbarui data post
+    $post->update($data);
+
+    return redirect()->route('posts.index')
+                     ->with('success', 'Post updated successfully.');
+}
+
 
     public function destroy($id)
     {

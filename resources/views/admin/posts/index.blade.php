@@ -20,6 +20,7 @@
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Image</th>
                         <th>Title</th>
                         <th>Category</th>
                         <th>Author</th>
@@ -30,6 +31,11 @@
                     @foreach($posts as $post)
                         <tr>
                             <td>{{ $post->id }}</td>
+                            <td>
+                                @if($post->image)
+                                <img src="{{ asset('storage/' . $post->image) }}" alt="Post Image" width="50%" class="img-thumbnail">
+                                @endif
+                            </td>
                             <td>{{ $post->title }}</td>
                             <td>{{ $post->category->name ?? 'N/A' }}</td>
                             <td>{{ $post->user->name ?? 'N/A' }}</td>
@@ -50,4 +56,30 @@
         </div>
     </div>
 </div>
+
+<!-- SweetAlert for success or error messages -->
+@if(session('success'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: '{{ session('success') }}',
+            timer: 3000,
+            showConfirmButton: false
+        });
+    </script>
+@endif
+
+@if(session('error'))
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '{{ session('error') }}',
+            timer: 3000,
+            showConfirmButton: false
+        });
+    </script>
+@endif
+
 @endsection
